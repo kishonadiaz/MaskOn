@@ -1,0 +1,42 @@
+﻿body
+{
+    background:Transparent;
+    overflow:hidden;
+    
+}
+video, canvas{
+    background:transparent;
+    transform: scaleX(-1);
+}
+#canvascont {
+    aspect-ratio: 1 / 1;
+    width: 500px;
+    position: absolute;
+    display: flex;
+    left: 0;
+    left: 36%;
+    top: 105px;
+    /*    background: blue;*/
+    justify-content: center;
+    align-content: center;
+}
+canvas{
+    margin:auto;
+    
+    position:absolute;
+    left:0;
+    
+}
+
+
+#dragger {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: red;
+    opacity:.2;
+}
