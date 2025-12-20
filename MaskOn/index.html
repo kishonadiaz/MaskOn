@@ -4,7 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-  
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.min.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/"
+          }
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
@@ -16,7 +23,9 @@
     <div id="dragger" draggable="true"></div>
     <video id="video" autoplay playsinline hidden></video>
     <div id="canvascont">
+        
         <canvas id="output"></canvas>
+        <canvas id="cover"></canvas>
     </div>
     
     <script src="https://maskon/js/main.js" type="module"></script>

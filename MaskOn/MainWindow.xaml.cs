@@ -296,17 +296,17 @@ namespace MaskOn
         {
             if (e.ButtonState == MouseButtonState.Pressed)
             {
-                ResizeMode = ResizeMode.CanResize;
-                Resizeer.CaptureMouse();
-                Resizeer.MouseMove += (s, ev) =>
-                {
-                    if (ev.LeftButton == MouseButtonState.Pressed)
-                    {
-                        var pos = ev.GetPosition(this);
-                        Width = pos.X + RESIZE_BORDER;
-                        Height = pos.Y + RESIZE_BORDER;
-                    }
-                };
+                //ResizeMode = ResizeMode.CanResize;
+                //Resizeer.CaptureMouse();
+                //Resizeer.MouseMove += (s, ev) =>
+                //{
+                //    if (ev.LeftButton == MouseButtonState.Pressed)
+                //    {
+                //        var pos = ev.GetPosition(this);
+                //        Width = pos.X + RESIZE_BORDER;
+                //        Height = pos.Y + RESIZE_BORDER;
+                //    }
+                //};
             }
         }
 
