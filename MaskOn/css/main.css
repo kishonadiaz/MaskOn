@@ -4,9 +4,15 @@
 /*    overflow:hidden;*/
     
 }
-video, canvas{
-    background:transparent;
+video, canvas {
+    background: transparent;
     transform: scaleX(-1);
+}
+#cover{
+/*    background:rgba(0, 38, 255,0.3);*/
+}
+#output{
+/*    background:green;*/
 }
 #canvascont {
     aspect-ratio: 1 / 1;
