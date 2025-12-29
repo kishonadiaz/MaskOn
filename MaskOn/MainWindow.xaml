@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:MaskOn"
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="MaskOn.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Topmost="True" Foreground="{x:Null}"  MouseDown="MouseDownWindow" ResizeMode="CanResize"  Background="{x:Null}" WindowStartupLocation="CenterScreen" MouseDoubleClick="WindowDoubleClicked" MouseEnter="MouseIn" d:DesignHeight="1707.954" d:DesignWidth="1996.014" WindowState="Maximized" WindowStyle="None" AllowsTransparency="True">
+        Title="MainWindow" Topmost="True" Foreground="{x:Null}"  MouseDown="MouseDownWindow" ResizeMode="CanResize"  Background="{x:Null}" WindowStartupLocation="CenterScreen" MouseDoubleClick="WindowDoubleClicked" MouseEnter="MouseIn" d:DesignHeight="24808.568" d:DesignWidth="29518.981" WindowState="Maximized" WindowStyle="None" AllowsTransparency="True">
 
 
     <Grid >
 
         <StackPanel Panel.ZIndex="99" Height="1000"  IsHitTestVisible="True" VerticalAlignment="Top">
-            <Border Panel.ZIndex="100" HorizontalAlignment="Center"  CornerRadius="12" x:Name="Border" MouseLeftButtonDown="DragBar_MouseLeftButtonDown" Width="122" Height="60" Background="Blue" VerticalAlignment="Top" MouseLeftButtonUp="Drag_ReleaseLeftClick" MouseLeave="MouseLeaving">
+            <Border Panel.ZIndex="100" HorizontalAlignment="Center"  CornerRadius="12" x:Name="Border" MouseLeftButtonDown="DragBar_MouseLeftButtonDown" Width="122"  Height="60" Background="Blue" VerticalAlignment="Top" MouseLeftButtonUp="Drag_ReleaseLeftClick" MouseLeave="MouseLeaving">
                 <Grid>
 
                     <!-- DRAG BAR -->
@@ -26,7 +26,7 @@
                 </Grid>
 
             </Border>
-           
+
 
 
         </StackPanel>
@@ -35,9 +35,12 @@
         <!--
 -->
         <Grid Background="Black" x:Name="Moverg" >
-            
+
         </Grid>
-        <Wpf:WebView2 IsHitTestVisible="True" Focusable="True"  Panel.ZIndex="-1"   x:Name="webview"  PreviewMouseLeftButtonDown="WebviewLeftButtonDown"   RenderTransformOrigin="0.5,0.5"  >
+        <Grid Background="Green" x:Name="Canvag" Opacity="0.01" >
+
+        </Grid>
+        <Wpf:WebView2 IsHitTestVisible="True"  Focusable="True"  Panel.ZIndex="-1"   x:Name="webview"  PreviewMouseLeftButtonDown="WebviewLeftButtonDown"   RenderTransformOrigin="0.5,0.5"  >
             <Wpf:WebView2.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

@@ -130,7 +130,13 @@ namespace MaskOn
             webview.CoreWebView2.SetVirtualHostNameToFolderMapping("maskon",new Uri(System.IO.Path.GetFullPath(@"..\..\..\")).AbsolutePath, CoreWebView2HostResourceAccessKind.Allow);
 
             InitializeWebview2Permission();
-            webview.CoreWebView2.AddHostObjectToScript("Movers", new Mover(Moverg));
+            webview.CoreWebView2.AddHostObjectToScript("Movers", new Mover(Moverg ,this));
+            webview.CoreWebView2.AddHostObjectToScript("CanvasMovers", new CanvasMover(Canvag));
+
+
+            Settings SecondWindow = new Settings();
+            webview.CoreWebView2.AddHostObjectToScript("Settings", new Setting(SecondWindow));
+
             webview.Source = new Uri("https://maskon/index.html");
 
             //Panel.SetZIndex(Border, 1000);
@@ -159,14 +165,16 @@ namespace MaskOn
         public class Mover 
         { 
             Grid Moverg = new Grid();
+            MainWindow mw = new MainWindow();
             Boolean IsMove = false;
             float PastX = 0.0f;
             float Pasty = 0.0f;
             public Mover() { Debug.WriteLine("here in Movers"); }
-            public Mover(Grid M) 
+            public Mover(Grid M ,MainWindow W) 
             {
                this.Moverg = M;
                this.IsMove = false;
+               this.mw = W;
 
             }
 
@@ -201,20 +209,178 @@ namespace MaskOn
                 }
                 Moverg.Dispatcher.Invoke(() =>
                 {
-                    Debug.WriteLine("Data from JS: " + data);
+                    //Debug.WriteLine("Data from JS: " + data);
                     var coords = data.Split(',');
                     if (coords.Length == 2 &&
                         double.TryParse(coords[0], out double x) &&
                         double.TryParse(coords[1], out double y))
                     {
-                        
-                        Moverg.RenderTransform = new TranslateTransform(x-725, y-335);
+                        var R = ((((this.mw.Width - this.mw.Height) - y*2) - float.Parse(HW[1])) / 2)+60;
+                        Debug.WriteLine($"Moving {this.mw.Width} {this.mw.Height} {R}");
+
+                        Moverg.RenderTransform = new TranslateTransform((x- this.mw.Height) +float.Parse(HW[0]), -R);
                         IsMove = true;
                     }
                 });
 
             }
         
+        }
+
+        [ClassInterface(ClassInterfaceType.AutoDual)]
+
+        [ComVisible(true)]
+
+        public class CanvasMover
+        {
+            Grid Moverg = new Grid();
+            Boolean IsMove = false;
+            float PastX = 0.0f;
+            float Pasty = 0.0f;
+            public CanvasMover() { Debug.WriteLine("here in Movers"); }
+            public CanvasMover(Grid M)
+            {
+                this.Moverg = M;
+                this.IsMove = false;
+
+            }
+
+            public void Moving()
+            {
+                if (IsMove)
+                {
+                    Moverg.Width = 100f;
+                    Moverg.Height = 100f;
+                    IsMove = true;
+                }
+            }
+
+            public void StopMoving()
+            {
+                Moverg.Width = PastX;
+                Moverg.Height = Pasty;
+                IsMove = false;
+            }
+
+            public void GetData(String data, String WH)
+            {
+                Debug.WriteLine(data);
+                Moverg.RenderTransform = new TranslateTransform();
+                var HW = WH.Split(',');
+                if (!IsMove)
+                {
+                    Moverg.Width = float.Parse(HW[0]);
+                    Moverg.Height = float.Parse(HW[1]);
+                    PastX = float.Parse(HW[0]);
+                    Pasty = float.Parse(HW[1]);
+                }
+                Moverg.Dispatcher.Invoke(() =>
+                {
+                    Debug.WriteLine("Data from JSC: " + data);
+                    var coords = data.Split(',');
+                    if (coords.Length == 2 &&
+                        double.TryParse(coords[0], out double x) &&
+                        double.TryParse(coords[1], out double y))
+                    {
+
+                        Moverg.RenderTransform = new TranslateTransform(x-525, y-145);
+                        IsMove = true;
+                    }
+                });
+
+            }
+
+        }
+
+
+
+
+
+        [ClassInterface(ClassInterfaceType.AutoDual)]
+
+        [ComVisible(true)]
+
+        public class Setting
+        {
+            Grid Moverg = new Grid();
+            Window S = new Window();
+            Boolean IsMove = false;
+            float PastX = 0.0f;
+            float Pasty = 0.0f;
+            public Setting() { Debug.WriteLine("here in Movers"); }
+            public Setting(Window Sets)
+            {
+                S = Sets;
+                //this.Moverg = M;
+                //this.IsMove = false;
+
+            }
+            public String Open() {
+                S = new Settings();
+                S.Owner = Application.Current.MainWindow;
+                bool? result = S.ShowDialog(); // Opens the window modally
+                String outs = "false";
+                if(result == true)
+                {
+                    outs = "true";
+                }
+                else
+                {
+                    outs = "false";
+
+                }
+
+                return outs;
+            }
+            public void Close()
+            {
+                S.Hide();
+            }
+            //public void Moving()
+            //{
+            //    if (IsMove)
+            //    {
+            //        Moverg.Width = 100f;
+            //        Moverg.Height = 100f;
+            //        IsMove = true;
+            //    }
+            //}
+
+            //public void StopMoving()
+            //{
+            //    Moverg.Width = PastX;
+            //    Moverg.Height = Pasty;
+            //    IsMove = false;
+            //}
+
+            //public void GetData(String data, String WH)
+            //{
+            //    Debug.WriteLine(data);
+            //    Moverg.RenderTransform = new TranslateTransform();
+            //    var HW = WH.Split(',');
+            //    if (!IsMove)
+            //    {
+            //        Moverg.Width = float.Parse(HW[0]);
+            //        Moverg.Height = float.Parse(HW[1]);
+            //        PastX = float.Parse(HW[0]);
+            //        Pasty = float.Parse(HW[1]);
+            //    }
+            //    Moverg.Dispatcher.Invoke(() =>
+            //    {
+            //        Debug.WriteLine("Data from JSC: " + data);
+            //        var coords = data.Split(',');
+            //        if (coords.Length == 2 &&
+            //            double.TryParse(coords[0], out double x) &&
+            //            double.TryParse(coords[1], out double y))
+            //        {
+
+            //            Moverg.RenderTransform = new TranslateTransform(x - 525, y - 145);
+            //            IsMove = true;
+            //        }
+            //    });
+
+            //}
+
         }
 
         private void CoreWebView2_PermissionRequested(object? sender, CoreWebView2PermissionRequestedEventArgs e)

@@ -4,6 +4,7 @@ MaskOn overlays a 3D mask onto a live camera feed and follows the user’s face in
 It uses MediaPipe face landmarks & segmentation for tracking and Three.js for rendering. Designed to run inside a WebView hosted by a __.NET 8__ WPF app.
 That allow you to have a mask on your face while straming or recording videos
 It is simular to Snap Camera and vTuber 
+IN the Camera feed you need to place the webcam to be cented there is a blue cicle to help you with that center the cicle close to your nose or until mask eyes cover your eyes
 
 ## Key features
 - Real-time face landmark detection using MediaPipe Face Landmarker (WASM / GPU delegate).  
